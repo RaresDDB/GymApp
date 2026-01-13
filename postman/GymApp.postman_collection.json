@@ -1,0 +1,483 @@
+{
+  "info": {
+    "name": "GymApp API",
+    "description": "REST API collection for Gym Membership Application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api"
+    }
+  ],
+  "item": [
+    {
+      "name": "Members",
+      "item": [
+        {
+          "name": "Create Member",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phone\": \"+1234567890\",\n  \"dateOfBirth\": \"1990-01-15\"\n}"
+            },
+            "url": "{{baseUrl}}/members"
+          }
+        },
+        {
+          "name": "Get All Members",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/members?page=0&size=20",
+              "host": ["{{baseUrl}}"],
+              "path": ["members"],
+              "query": [
+                {"key": "page", "value": "0"},
+                {"key": "size", "value": "20"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Member by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/members/{{memberId}}"
+          }
+        },
+        {
+          "name": "Search Members",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/members/search?query=John",
+              "host": ["{{baseUrl}}"],
+              "path": ["members", "search"],
+              "query": [{"key": "query", "value": "John"}]
+            }
+          }
+        },
+        {
+          "name": "Update Member",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Jane\",\n  \"phone\": \"+0987654321\"\n}"
+            },
+            "url": "{{baseUrl}}/members/{{memberId}}"
+          }
+        },
+        {
+          "name": "Delete Member",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/members/{{memberId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Membership Plans",
+      "item": [
+        {
+          "name": "Create Plan",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Premium\",\n  \"description\": \"Premium membership with all features\",\n  \"price\": 99.99,\n  \"durationMonths\": 12,\n  \"includesPersonalTraining\": true,\n  \"includesGroupClasses\": true,\n  \"maxClassesPerMonth\": 20\n}"
+            },
+            "url": "{{baseUrl}}/plans"
+          }
+        },
+        {
+          "name": "Get All Plans",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/plans"
+          }
+        },
+        {
+          "name": "Get Plan by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/plans/{{planId}}"
+          }
+        },
+        {
+          "name": "Update Plan",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 129.99\n}"
+            },
+            "url": "{{baseUrl}}/plans/{{planId}}"
+          }
+        },
+        {
+          "name": "Delete Plan",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/plans/{{planId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subscriptions",
+      "item": [
+        {
+          "name": "Create Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"memberId\": \"{{memberId}}\",\n  \"planId\": \"{{planId}}\"\n}"
+            },
+            "url": "{{baseUrl}}/subscriptions"
+          }
+        },
+        {
+          "name": "Get Subscription by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscriptions/{{subscriptionId}}"
+          }
+        },
+        {
+          "name": "Get Member Subscription",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscriptions/member/{{memberId}}"
+          }
+        },
+        {
+          "name": "Cancel Subscription",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/subscriptions/{{subscriptionId}}/cancel"
+          }
+        },
+        {
+          "name": "Renew Subscription",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/subscriptions/{{subscriptionId}}/renew"
+          }
+        },
+        {
+          "name": "Get Expiring Subscriptions",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/expiring?daysAhead=7",
+              "host": ["{{baseUrl}}"],
+              "path": ["subscriptions", "expiring"],
+              "query": [{"key": "daysAhead", "value": "7"}]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Trainers",
+      "item": [
+        {
+          "name": "Create Trainer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Mike\",\n  \"lastName\": \"Smith\",\n  \"email\": \"mike.smith@gym.com\",\n  \"phone\": \"+1234567890\",\n  \"specialization\": \"Strength Training\",\n  \"bio\": \"Certified personal trainer with 10 years experience\",\n  \"hourlyRate\": 50.00\n}"
+            },
+            "url": "{{baseUrl}}/trainers"
+          }
+        },
+        {
+          "name": "Get All Trainers",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/trainers"
+          }
+        },
+        {
+          "name": "Get Trainer by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/trainers/{{trainerId}}"
+          }
+        },
+        {
+          "name": "Get Trainers by Specialization",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/trainers/specialization/Strength%20Training"
+          }
+        },
+        {
+          "name": "Get Trainer Sessions",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/trainers/{{trainerId}}/sessions"
+          }
+        },
+        {
+          "name": "Update Trainer",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hourlyRate\": 60.00\n}"
+            },
+            "url": "{{baseUrl}}/trainers/{{trainerId}}"
+          }
+        },
+        {
+          "name": "Delete Trainer",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/trainers/{{trainerId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Training Sessions",
+      "item": [
+        {
+          "name": "Book Training Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"memberId\": \"{{memberId}}\",\n  \"trainerId\": \"{{trainerId}}\",\n  \"scheduledAt\": \"2026-01-15T10:00:00\",\n  \"durationMinutes\": 60,\n  \"notes\": \"Focus on upper body\"\n}"
+            },
+            "url": "{{baseUrl}}/training-sessions"
+          }
+        },
+        {
+          "name": "Get Session by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/training-sessions/{{sessionId}}"
+          }
+        },
+        {
+          "name": "Get Member Sessions",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/training-sessions/member/{{memberId}}"
+          }
+        },
+        {
+          "name": "Cancel Session",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/training-sessions/{{sessionId}}/cancel"
+          }
+        },
+        {
+          "name": "Complete Session",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/training-sessions/{{sessionId}}/complete"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Gym Classes",
+      "item": [
+        {
+          "name": "Create Gym Class",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Morning Yoga\",\n  \"description\": \"Relaxing yoga session to start your day\",\n  \"instructor\": \"Jane Doe\",\n  \"maxCapacity\": 20,\n  \"scheduledAt\": \"2026-01-15T08:00:00\",\n  \"durationMinutes\": 60,\n  \"classType\": \"YOGA\"\n}"
+            },
+            "url": "{{baseUrl}}/classes"
+          }
+        },
+        {
+          "name": "Get All Classes",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/classes"
+          }
+        },
+        {
+          "name": "Get Class by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/classes/{{classId}}"
+          }
+        },
+        {
+          "name": "Get Available Classes",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/classes/available"
+          }
+        },
+        {
+          "name": "Get Classes by Type",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/classes/type/YOGA"
+          }
+        },
+        {
+          "name": "Enroll in Class",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"memberId\": \"{{memberId}}\"\n}"
+            },
+            "url": "{{baseUrl}}/classes/{{classId}}/enroll"
+          }
+        },
+        {
+          "name": "Cancel Enrollment",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/classes/{{classId}}/enroll/{{memberId}}"
+          }
+        },
+        {
+          "name": "Get Class Enrollments",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/classes/{{classId}}/enrollments"
+          }
+        },
+        {
+          "name": "Update Class",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"maxCapacity\": 25\n}"
+            },
+            "url": "{{baseUrl}}/classes/{{classId}}"
+          }
+        },
+        {
+          "name": "Delete Class",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/classes/{{classId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Attendance",
+      "item": [
+        {
+          "name": "Check In",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"memberId\": \"{{memberId}}\"\n}"
+            },
+            "url": "{{baseUrl}}/attendance/check-in"
+          }
+        },
+        {
+          "name": "Check Out",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/attendance/{{attendanceId}}/check-out"
+          }
+        },
+        {
+          "name": "Get Attendance by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/attendance/{{attendanceId}}"
+          }
+        },
+        {
+          "name": "Get Member Attendance",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/attendance/member/{{memberId}}"
+          }
+        },
+        {
+          "name": "Get Attendance Report",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/attendance/report?startDate=2026-01-01&endDate=2026-01-31",
+              "host": ["{{baseUrl}}"],
+              "path": ["attendance", "report"],
+              "query": [
+                {"key": "startDate", "value": "2026-01-01"},
+                {"key": "endDate", "value": "2026-01-31"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Member Visit Count",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/attendance/member/{{memberId}}/count?startDate=2026-01-01&endDate=2026-01-31",
+              "host": ["{{baseUrl}}"],
+              "path": ["attendance", "member", "{{memberId}}", "count"],
+              "query": [
+                {"key": "startDate", "value": "2026-01-01"},
+                {"key": "endDate", "value": "2026-01-31"}
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
